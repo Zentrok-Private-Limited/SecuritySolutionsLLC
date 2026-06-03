@@ -13,19 +13,19 @@ interface Category {
 }
 
 const categories: Category[] = [
-  { id: "ac-compressor", name: "A/C COMPRESSOR AND COMPONENT KIT", productCount: 7, imageSrc: "/images/dummy-ac.jpg" },
-  { id: "abs-sensor", name: "ABS WHEEL SPEED SENSOR", productCount: 8, imageSrc: "/images/dummy-abs.jpg" },
-  { id: "alternator", name: "ALTERNATOR", productCount: 12, imageSrc: "/images/dummy-alternator.jpg" },
-  { id: "battery", name: "BATTERY", productCount: 9, imageSrc: "/images/dummy-battery.jpg" },
-  { id: "battery-charger", name: "BATTERY CHARGER", productCount: 15, imageSrc: "/images/dummy-charger.jpg" },
-  { id: "brake-pads", name: "BREAK PADS", productCount: 14, imageSrc: "/images/dummy-brakes.jpg" },
-  { id: "carburetor", name: "CARBURETOR", productCount: 8, isPlaceholder: true },
-  { id: "exhaust-kit", name: "EXHAUST SYSTEM KIT", productCount: 6, isPlaceholder: true },
-  { id: "floor-mat", name: "FLOOR MAT", productCount: 21, imageSrc: "/images/dummy-floormat.jpg" },
-  { id: "headlight", name: "HEADLIGHT", productCount: 15, imageSrc: "/images/dummy-headlight.jpg" },
-  { id: "oil-filter", name: "OIL FILTER", productCount: 11, imageSrc: "/images/dummy-oilfilter.jpg" },
-  { id: "rotors-drums", name: "ROTORS AND DRUMS", productCount: 16, imageSrc: "/images/dummy-rotors.jpg" },
-  { id: "spark-plug", name: "SPARK PLUG", productCount: 12, imageSrc: "/images/dummy-sparkplug.jpg" },
+  { id: "ac-compressor", name: "A/C COMPRESSOR AND COMPONENT KIT", productCount: 6, imageSrc: "/shop-bg/ac-compressor.webp" },
+  { id: "abs-sensor", name: "ABS WHEEL SPEED SENSOR", productCount: 8, imageSrc: "/shop-bg/abs.webp" },
+  { id: "alternator", name: "ALTERNATOR", productCount: 12, imageSrc: "/shop-bg/Alternator.webp" },
+  { id: "battery", name: "BATTERY", productCount: 9, imageSrc: "/shop-bg/battery.webp" },
+  { id: "battery-charger", name: "BATTERY CHARGER", productCount: 15, imageSrc: "/shop-bg/battery-charger.webp" },
+  { id: "brake-pads", name: "BREAK PADS", productCount: 14, imageSrc: "/shop-bg/break-pads.webp" },
+  { id: "carburetor", name: "CARBURETOR", productCount: 8, imageSrc: "/shop-bg/caborator.jpeg" },
+  { id: "exhaust-kit", name: "EXHAUST SYSTEM KIT", productCount: 6, imageSrc: "/shop-bg/exhaust systems kit.jpeg" },
+  { id: "floor-mat", name: "FLOOR MAT", productCount: 21, imageSrc: "/shop-bg/floor-mat.webp" },
+  { id: "headlight", name: "HEADLIGHT", productCount: 15, imageSrc: "/shop-bg/head-light.webp" },
+  { id: "oil-filter", name: "OIL FILTER", productCount: 11, imageSrc: "/shop-bg/oil-filter.webp" },
+  { id: "rotors-drums", name: "ROTORS AND DRUMS", productCount: 16, imageSrc: "/shop-bg/rotor.webp" },
+  { id: "spark-plug", name: "SPARK PLUG", productCount: 12, imageSrc: "/shop-bg/sparkplug.webp" },
 ];
 
 export default function ShopPage() {
@@ -61,9 +61,6 @@ export default function ShopPage() {
                 ) : (
                   // Client Image Frame with dummy paths
                   <div className="w-full h-full relative p-2 flex items-center justify-center">
-                    <div className="text-zinc-300 font-mono text-xs absolute top-2 left-2 z-10 bg-black/5 px-1 pointer-events-none">
-                      [Img: {category.imageSrc?.split('/').pop()}]
-                    </div>
                     <Image
                       src={category.imageSrc || "/images/placeholder.jpg"}
                       alt={category.name}

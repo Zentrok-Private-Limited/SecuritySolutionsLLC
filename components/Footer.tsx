@@ -29,7 +29,7 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/refund-policy" className="underline hover:text-zinc-300 transition-colors">
+              <Link href="/return-refund" className="underline hover:text-zinc-300 transition-colors">
                 Return & Refund Policy
               </Link>
             </li>
