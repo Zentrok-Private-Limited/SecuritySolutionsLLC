@@ -3,11 +3,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
   const [isPoliciesOpen, setIsPoliciesOpen] = useState(false);
 
   const pathname = usePathname();
+  const { cartCount } = useCart();
 
   // CHECK IF HOME PAGE
   const isHomePage = pathname === '/';
@@ -136,7 +138,7 @@ export default function Navbar() {
 
             {/* Item Counter Badge */}
             <span className="absolute -top-2 -right-2 bg-white text-black font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border border-black shadow-md">
-              0
+              {cartCount}
             </span>
           </Link>
         </div>

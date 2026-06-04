@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { categoryProductsData } from "@/data/product";
+import { categoryProductsData } from "@/scrapper/products";
 
 interface PageProps {
   // Update params to be a Promise in Next.js 15
@@ -66,9 +66,6 @@ export default async function CategoryListingPage({ params }: PageProps) {
               >
                 {/* Product Image Panel */}
                 <div className="w-full h-56 relative flex items-center justify-center p-4 bg-white border-b border-zinc-100">
-                  <div className="text-zinc-400 font-mono text-[10px] absolute top-2 left-2 pointer-events-none">
-                    [SKU: {product.sku}]
-                  </div>
                   <Image
                     src={product.imageSrc}
                     alt={product.name}

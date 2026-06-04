@@ -8,7 +8,7 @@ interface Category {
   id: string;
   name: string;
   productCount: number;
-  imageSrc?: string; // Left blank or with dummy paths as requested
+  imageSrc?: string; 
   isPlaceholder?: boolean;
 }
 

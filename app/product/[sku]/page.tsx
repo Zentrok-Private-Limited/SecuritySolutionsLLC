@@ -4,7 +4,8 @@ import React, { useState, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { categoryProductsData } from "@/data/product";
+import { categoryProductsData } from "@/scrapper/products";
+import { useCart } from "@/context/CartContext";
 
 interface PageProps {
   params: Promise<{
@@ -37,23 +38,28 @@ export default function ProductDetailPage({ params }: PageProps) {
   // Fallback image collection if multiple images aren't present in static array
   const galleryImages = foundProduct.images || [
     foundProduct.imageSrc,
-    "/images/products/alt-view1.jpg", 
-    "/images/products/alt-view2.jpg"
+    "/images/products/alt-view1.jpg",
+    "/images/products/alt-view2.jpg",
   ];
 
   // Track currently selected display image index state
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
 
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-red-900 mt-16">
       <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-12 md:py-20">
-        
         {/* Breadcrumbs */}
         <div className="text-sm text-zinc-500 mb-8 font-medium uppercase tracking-wider">
-          <Link href="/shop" className="hover:text-white transition-colors">Shop</Link>
+          <Link href="/shop" className="hover:text-white transition-colors">
+            Shop
+          </Link>
           <span className="mx-2">/</span>
-          <Link href={`/category/${parentCategory.id}`} className="hover:text-white transition-colors">
+          <Link
+            href={`/category/${parentCategory.id}`}
+            className="hover:text-white transition-colors"
+          >
             {parentCategory.name}
           </Link>
           <span className="mx-2">/</span>
@@ -62,15 +68,10 @@ export default function ProductDetailPage({ params }: PageProps) {
 
         {/* Main Product Frame Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
           {/* Left Column: Images Workspace */}
           <div className="lg:col-span-6 flex flex-col gap-4">
-            
             {/* Main True White Image Showcase Box */}
             <div className="bg-white w-full h-80 sm:h-96 md:h-112.5 relative flex items-center justify-center p-8 border border-zinc-800">
-              <span className="text-zinc-400 font-mono text-xs absolute top-4 left-4 pointer-events-none uppercase tracking-widest">
-                Part No: {foundProduct.partnumber || "N/A"}
-              </span>
               <Image
                 src={galleryImages[activeImageIndex]} // Updated to map live state swaps!
                 alt={foundProduct.name}
@@ -88,8 +89,8 @@ export default function ProductDetailPage({ params }: PageProps) {
                   key={idx}
                   onClick={() => setActiveImageIndex(idx)}
                   className={`w-24 h-24 bg-white p-2 border flex items-center justify-center shrink-0 transition-all ${
-                    activeImageIndex === idx 
-                      ? "border-[#8B0000] ring-2 ring-[#8B0000]/20" 
+                    activeImageIndex === idx
+                      ? "border-[#8B0000] ring-2 ring-[#8B0000]/20"
                       : "border-zinc-800 opacity-60 hover:opacity-100"
                   }`}
                   aria-label={`View product image option ${idx + 1}`}
@@ -115,11 +116,16 @@ export default function ProductDetailPage({ params }: PageProps) {
               <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight uppercase">
                 {foundProduct.name}
               </h1>
-              
+
               {/* Technical Code Meta Identifiers */}
               <div className="flex flex-wrap gap-x-6 gap-y-1 text-zinc-500 font-mono text-sm mt-3">
                 {foundProduct.partnumber && (
-                  <p>PART NO: <span className="text-zinc-300">{foundProduct.partnumber}</span></p>
+                  <p>
+                    PART NO:{" "}
+                    <span className="text-zinc-300">
+                      {foundProduct.partnumber}
+                    </span>
+                  </p>
                 )}
               </div>
             </div>
@@ -127,8 +133,12 @@ export default function ProductDetailPage({ params }: PageProps) {
             {/* Price Frame */}
             <div className="border-y border-zinc-800 py-4 flex items-center justify-between">
               <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Price</p>
-                <p className="text-4xl font-black text-white mt-1">{foundProduct.price}</p>
+                <p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
+                  Price
+                </p>
+                <p className="text-4xl font-black text-white mt-1">
+                  {foundProduct.price}
+                </p>
               </div>
               <span className="text-xs font-bold bg-emerald-950 text-emerald-400 px-3 py-1.5 border border-emerald-800/50 uppercase tracking-wider">
                 In Stock & Ready to Ship
@@ -147,8 +157,14 @@ export default function ProductDetailPage({ params }: PageProps) {
 
             {/* Fitment Safety Reminder */}
             <div className="p-4 bg-zinc-950 border-l-4 border-[#8B0000] text-sm text-zinc-400">
-              <p className="text-white font-bold uppercase tracking-wide text-xs mb-1">Guaranteed Fitment Notice</p>
-              <p>Cross-reference your vehicle parameters or original component ID strings to guarantee absolute system compliance before final purchase configuration.</p>
+              <p className="text-white font-bold uppercase tracking-wide text-xs mb-1">
+                Guaranteed Fitment Notice
+              </p>
+              <p>
+                Cross-reference your vehicle parameters or original component ID
+                strings to guarantee absolute system compliance before final
+                purchase configuration.
+              </p>
             </div>
 
             {/* Actions Block */}
@@ -158,15 +174,27 @@ export default function ProductDetailPage({ params }: PageProps) {
                 type="number"
                 min="1"
                 value={quantity}
-                onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                onChange={(e) =>
+                  setQuantity(Math.max(1, parseInt(e.target.value) || 1))
+                }
                 className="w-14 h-12 bg-white text-black text-center font-bold text-base border border-zinc-700 focus:outline-none"
               />
-              
-              <button className="grow bg-[#8B0000] hover:bg-red-900 text-white font-extrabold text-sm uppercase h-12 tracking-widest transition-colors shadow-md">
+
+              <button
+                onClick={() =>
+                  addToCart({
+                    id: foundProduct.id,
+                    name: foundProduct.name,
+                    price: foundProduct.price,
+                    imageSrc: foundProduct.imageSrc,
+                    quantity: 1,
+                  })
+                }
+              >
                 Add To Cart
               </button>
-              <Link 
-                href="/shipping-policy" 
+              <Link
+                href="/shipping-policy"
                 className="flex-1 border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-bold text-sm uppercase h-12 flex items-center justify-center tracking-wider text-center transition-colors"
               >
                 Shipping Info
@@ -183,8 +211,8 @@ export default function ProductDetailPage({ params }: PageProps) {
             </h2>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
               {foundProduct.features.map((feature: string, idx: number) => (
-                <li 
-                  key={idx} 
+                <li
+                  key={idx}
                   className="flex items-start gap-3 text-zinc-300 text-base leading-relaxed bg-zinc-950/40 p-4 border border-zinc-900"
                 >
                   <span className="text-[#8B0000] font-bold text-lg select-none mt-0.5">
@@ -196,7 +224,6 @@ export default function ProductDetailPage({ params }: PageProps) {
             </ul>
           </div>
         )}
-
       </div>
     </div>
   );
