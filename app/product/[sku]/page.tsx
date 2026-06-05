@@ -111,7 +111,7 @@ export default function ProductDetailPage({ params }: PageProps) {
           <div className="lg:col-span-6 space-y-6">
             <div>
               <span className="text-xs font-bold text-[#8B0000] uppercase tracking-widest block mb-1">
-                Guarded Access Solutions Certified
+                Security Solutions Certified
               </span>
               <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight uppercase">
                 {foundProduct.name}
@@ -190,6 +190,7 @@ export default function ProductDetailPage({ params }: PageProps) {
                     quantity: 1,
                   })
                 }
+                className="bg-[#8B0000] text-white px-4 py-3"
               >
                 Add To Cart
               </button>
@@ -224,6 +225,86 @@ export default function ProductDetailPage({ params }: PageProps) {
             </ul>
           </div>
         )}
+
+        {/* RELATED PRODUCTS SECTION */}
+        {(() => {
+          const relatedProducts = parentCategory.products
+            .filter((p) => p.id !== foundProduct.id)
+            .slice(0, 4);
+
+          if (relatedProducts.length === 0) return null;
+
+          return (
+            <div className="mt-20 pt-12 border-t border-zinc-900">
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.3em] text-zinc-500 font-semibold">
+                    Recommended Gear
+                  </p>
+
+                  <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-[#8B0000] mt-1">
+                    Related Products
+                  </h2>
+                </div>
+
+                <Link
+                  href={`/category/${parentCategory.id}`}
+                  className="text-sm uppercase tracking-wider font-bold text-zinc-400 hover:text-white transition-colors"
+                >
+                  View All
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {relatedProducts.map((product) => (
+                  <Link
+                    key={product.id}
+                    href={`/product/${product.id}`}
+                    className="group bg-zinc-950 border border-zinc-900 hover:border-[#8B0000] transition-all duration-300 overflow-hidden"
+                  >
+                    {/* IMAGE */}
+                    <div className="bg-white h-64 flex items-center justify-center p-6 overflow-hidden">
+                      <Image
+                        src={product.imageSrc}
+                        alt={product.name}
+                        width={220}
+                        height={220}
+                        className="object-contain group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+
+                    {/* CONTENT */}
+                    <div className="p-5">
+                      <p className="text-[10px] uppercase tracking-[0.25em] text-zinc-500 font-semibold mb-2">
+                        Performance Component
+                      </p>
+
+                      <h3 className="text-sm font-bold uppercase leading-snug text-white group-hover:text-[#8B0000] transition-colors min-h-[44px]">
+                        {product.name}
+                      </h3>
+
+                      {product.partnumber && (
+                        <p className="text-xs text-zinc-500 mt-2 font-mono">
+                          PART#: {product.partnumber}
+                        </p>
+                      )}
+
+                      <div className="mt-5 flex items-center justify-between">
+                        <p className="text-xl font-black text-white">
+                          {product.price}
+                        </p>
+
+                        <span className="text-[10px] uppercase tracking-widest text-emerald-400 border border-emerald-800/50 px-2 py-1">
+                          In Stock
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );
