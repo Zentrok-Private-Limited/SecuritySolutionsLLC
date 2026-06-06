@@ -42,8 +42,27 @@ export default function ProductDetailPage({ params }: PageProps) {
     "/images/products/alt-view2.jpg",
   ];
 
+  const handleAddToCart = () => {
+    addToCart({
+      id: foundProduct.id,
+      name: foundProduct.name,
+      price: foundProduct.price,
+      imageSrc: foundProduct.imageSrc,
+      quantity: 1,
+    });
+
+    // SHOW POPUP
+    setShowPopup(true);
+
+    // HIDE AFTER 2 SECONDS
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 2000);
+  };
+
   // Track currently selected display image index state
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
 
@@ -180,20 +199,13 @@ export default function ProductDetailPage({ params }: PageProps) {
                 className="w-14 h-12 bg-white text-black text-center font-bold text-base border border-zinc-700 focus:outline-none"
               />
 
-              <button
-                onClick={() =>
-                  addToCart({
-                    id: foundProduct.id,
-                    name: foundProduct.name,
-                    price: foundProduct.price,
-                    imageSrc: foundProduct.imageSrc,
-                    quantity: 1,
-                  })
-                }
-                className="bg-[#8B0000] text-white px-4 py-3"
-              >
-                Add To Cart
-              </button>
+              
+                <button
+                  onClick={handleAddToCart}
+                  className="bg-[#8B0000] text-white px-4 py-3"
+                >
+                  Add To Cart
+                </button>
               <Link
                 href="/shipping-policy"
                 className="flex-1 border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-bold text-sm uppercase h-12 flex items-center justify-center tracking-wider text-center transition-colors"
@@ -201,6 +213,11 @@ export default function ProductDetailPage({ params }: PageProps) {
                 Shipping Info
               </Link>
             </div>
+            {showPopup && (
+                  <p className="text-red-800 text-sm font-medium">
+                    Item added to cart 
+                  </p>
+                )}
           </div>
         </div>
 
