@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 import { useCart } from "@/context/CartContext";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const {
@@ -14,6 +15,8 @@ export default function CartPage() {
     removeFromCart,
     totalPrice,
   } = useCart();
+  
+  const router = useRouter();
 
   const [removedItem, setRemovedItem] = useState<any>(null);
 
@@ -204,8 +207,8 @@ export default function CartPage() {
             <div className="flex justify-end mt-14">
               <div className="w-full max-w-130">
                 
-                <div className="bg-[#dcdcdc] p-10">
-                  <h2 className="text-[58px] leading-none font-semibold text-[#8B0000]">
+                <div className="bg-[#dcdcdc] p-6">
+                  <h2 className="text-5xl leading-none font-semibold text-[#8B0000]">
                     Cart totals
                   </h2>
                 </div>
@@ -213,28 +216,28 @@ export default function CartPage() {
                 <div className="border border-zinc-700 border-t-0">
                   
                   <div className="flex items-center justify-between px-8 py-6 border-b border-zinc-700">
-                    <p className="text-xl font-semibold">
+                    <p className="text-lg font-semibold">
                       Subtotal
                     </p>
 
-                    <p className="text-xl">
+                    <p className="text-lg font-semibold">
                       ${totalPrice.toFixed(2)}
                     </p>
                   </div>
 
                   <div className="flex items-center justify-between px-8 py-6">
-                    <p className="text-2xl font-bold">
+                    <p className="text-lg font-bold">
                       Total
                     </p>
 
-                    <p className="text-3xl font-bold text-[#8B0000]">
+                    <p className="text-lg font-bold text-white">
                       ${totalPrice.toFixed(2)}
                     </p>
                   </div>
                 </div>
 
                 {/* CHECKOUT */}
-                <button className="w-full mt-6 bg-[#8B0000] hover:bg-red-800 transition h-16.25 text-white text-2xl font-semibold rounded-full">
+                <button onClick={() => {router.push("/checkout");}} className="w-full mt-6 bg-[#FFD800] hover:bg-yellow-400 text-[#8B0000] transition h-16.25 text-2xl font-semibold rounded-full">
                   Proceed to checkout
                 </button>
               </div>
