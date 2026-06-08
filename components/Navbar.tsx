@@ -1,67 +1,94 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import React, { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
-  const [isPoliciesOpen, setIsPoliciesOpen] = useState(false);
+  const [isPoliciesOpen, setIsPoliciesOpen] =
+    useState(false);
+
+  const [mobileMenuOpen, setMobileMenuOpen] =
+    useState(false);
 
   const pathname = usePathname();
+
   const { cartCount } = useCart();
 
-  // CHECK IF HOME PAGE
-  const isHomePage = pathname === '/';
+  const isHomePage = pathname === "/";
 
   return (
     <header
       className={`w-full absolute top-0 left-0 z-50 ${
-        isHomePage ? 'bg-transparent' : 'bg-zinc-900'
+        isHomePage
+          ? "bg-transparent"
+          : "bg-zinc-900"
       }`}
     >
-      <div className="max-w-350 mx-auto px-6 h-28 flex items-center justify-between">
-        
-        {/* LOGO AREA - Left Aligned */}
-        <div className="shrink-0">
-          <Link href="/">
-            <div className="w-44 h-24 bg-slate-800/50 border border-dashed border-slate-600 rounded flex items-center justify-center text-xs text-slate-400 font-mono">
-              [ PLACEHOLDER LOGO ]
-            </div>
-          </Link>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-24 flex items-center justify-between">
 
-        {/* NAVIGATION & UTILITIES - Right Aligned */}
-        <div className="flex items-center space-x-8">
-          <nav className="hidden lg:flex items-center space-x-7 text-white font-medium text-[15px]">
-            <Link href="/" className="hover:text-red-500 transition-colors">
+        {/* LOGO */}
+        <Link
+          href="/"
+          className="shrink-0"
+        >
+          <div className="w-36 sm:w-44 h-20 bg-slate-800/50 border border-dashed border-slate-600 rounded flex items-center justify-center text-[10px] sm:text-xs text-slate-400 font-mono">
+            [ PLACEHOLDER LOGO ]
+          </div>
+        </Link>
+
+        {/* DESKTOP NAV */}
+        <div className="hidden lg:flex items-center gap-8">
+
+          <nav className="flex items-center gap-7 text-white font-medium text-[15px]">
+
+            <Link
+              href="/"
+              className="hover:text-red-500 transition-colors"
+            >
               Home
             </Link>
 
-            <Link href="/shop" className="hover:text-red-500 transition-colors">
+            <Link
+              href="/shop"
+              className="hover:text-red-500 transition-colors"
+            >
               Shop
             </Link>
 
-            <Link href="/contact" className="hover:text-red-500 transition-colors">
+            <Link
+              href="/contact"
+              className="hover:text-red-500 transition-colors"
+            >
               Contact
             </Link>
 
-            <Link href="/about" className="hover:text-red-500 transition-colors">
+            <Link
+              href="/about"
+              className="hover:text-red-500 transition-colors"
+            >
               About Us
             </Link>
 
-            {/* Policies Dropdown Navigation */}
+            {/* POLICIES */}
             <div className="relative">
+
               <button
-                onClick={() => setIsPoliciesOpen(!isPoliciesOpen)}
-                onBlur={() => setTimeout(() => setIsPoliciesOpen(false), 200)}
-                className="flex items-center gap-1 hover:text-red-500 transition-colors focus:outline-none"
+                onClick={() =>
+                  setIsPoliciesOpen(
+                    !isPoliciesOpen
+                  )
+                }
+                className="flex items-center gap-1 hover:text-red-500 transition-colors"
               >
                 Policies
 
                 <svg
-                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    isPoliciesOpen ? 'rotate-180' : ''
+                  className={`w-3.5 h-3.5 transition-transform ${
+                    isPoliciesOpen
+                      ? "rotate-180"
+                      : ""
                   }`}
                   fill="none"
                   stroke="currentColor"
@@ -77,31 +104,32 @@ export default function Navbar() {
               </button>
 
               {isPoliciesOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-black/95 border border-slate-800 rounded shadow-xl py-2 flex flex-col text-sm">
+                <div className="absolute top-full left-0 mt-2 w-52 bg-black border border-zinc-800 rounded-lg overflow-hidden shadow-2xl">
+
                   <Link
                     href="/terms-conditions"
-                    className="px-4 py-2 hover:bg-slate-900 text-slate-300 hover:text-white"
+                    className="block px-4 py-3 text-sm hover:bg-zinc-900"
                   >
                     Terms & Conditions
                   </Link>
 
                   <Link
                     href="/shipping-policy"
-                    className="px-4 py-2 hover:bg-slate-900 text-slate-300 hover:text-white"
+                    className="block px-4 py-3 text-sm hover:bg-zinc-900"
                   >
                     Shipping Policy
                   </Link>
 
                   <Link
                     href="/privacy-policy"
-                    className="px-4 py-2 hover:bg-slate-900 text-slate-300 hover:text-white"
+                    className="block px-4 py-3 text-sm hover:bg-zinc-900"
                   >
                     Privacy Policy
                   </Link>
 
                   <Link
                     href="/return-refund"
-                    className="px-4 py-2 hover:bg-slate-900 text-slate-300 hover:text-white"
+                    className="block px-4 py-3 text-sm hover:bg-zinc-900"
                   >
                     Refund Policy
                   </Link>
@@ -111,16 +139,16 @@ export default function Navbar() {
 
             <Link
               href="/authorization-form"
-              className="tracking-wider hover:text-red-500 transition-colors uppercase text-[14px]"
+              className="uppercase tracking-wider text-[14px] hover:text-red-500 transition-colors"
             >
-              AUTHORIZATION FORM
+              Authorization Form
             </Link>
           </nav>
 
-          {/* SHOPPING CART ICON WITH BADGE */}
+          {/* CART */}
           <Link
             href="/cart"
-            className="relative p-2.5 border border-white rounded flex items-center justify-center hover:bg-white/10 transition-colors group"
+            className="relative p-2.5 border border-white rounded hover:bg-white/10 transition"
           >
             <svg
               className="w-5 h-5 text-white"
@@ -136,13 +164,171 @@ export default function Navbar() {
               />
             </svg>
 
-            {/* Item Counter Badge */}
-            <span className="absolute -top-2 -right-2 bg-white text-black font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border border-black shadow-md">
+            <span className="absolute -top-2 -right-2 bg-white text-black font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
               {cartCount}
             </span>
           </Link>
         </div>
+
+        {/* MOBILE RIGHT */}
+        <div className="flex lg:hidden items-center gap-4">
+
+          {/* CART */}
+          <Link
+            href="/cart"
+            className="relative p-2 border border-white rounded"
+          >
+            <svg
+              className="w-5 h-5 text-white"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5"
+              />
+            </svg>
+
+            <span className="absolute -top-2 -right-2 bg-white text-black font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
+              {cartCount}
+            </span>
+          </Link>
+
+          {/* HAMBURGER */}
+          <button
+            onClick={() =>
+              setMobileMenuOpen(
+                !mobileMenuOpen
+              )
+            }
+            className="text-white"
+          >
+            {mobileMenuOpen ? (
+              <svg
+                className="w-7 h-7"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <svg
+                className="w-7 h-7"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
+
+      {/* MOBILE MENU */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-black border-t border-zinc-800 px-6 py-6">
+
+          <nav className="flex flex-col gap-5 text-white">
+
+            <Link
+              href="/"
+              onClick={() =>
+                setMobileMenuOpen(false)
+              }
+            >
+              Home
+            </Link>
+
+            <Link
+              href="/shop"
+              onClick={() =>
+                setMobileMenuOpen(false)
+              }
+            >
+              Shop
+            </Link>
+
+            <Link
+              href="/contact"
+              onClick={() =>
+                setMobileMenuOpen(false)
+              }
+            >
+              Contact
+            </Link>
+
+            <Link
+              href="/about"
+              onClick={() =>
+                setMobileMenuOpen(false)
+              }
+            >
+              About Us
+            </Link>
+
+            <Link
+              href="/terms-conditions"
+              onClick={() =>
+                setMobileMenuOpen(false)
+              }
+            >
+              Terms & Conditions
+            </Link>
+
+            <Link
+              href="/shipping-policy"
+              onClick={() =>
+                setMobileMenuOpen(false)
+              }
+            >
+              Shipping Policy
+            </Link>
+
+            <Link
+              href="/privacy-policy"
+              onClick={() =>
+                setMobileMenuOpen(false)
+              }
+            >
+              Privacy Policy
+            </Link>
+
+            <Link
+              href="/return-refund"
+              onClick={() =>
+                setMobileMenuOpen(false)
+              }
+            >
+              Refund Policy
+            </Link>
+
+            <Link
+              href="/authorization-form"
+              onClick={() =>
+                setMobileMenuOpen(false)
+              }
+              className="uppercase"
+            >
+              Authorization Form
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
